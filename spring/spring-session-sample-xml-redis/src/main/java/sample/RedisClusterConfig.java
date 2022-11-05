@@ -40,7 +40,6 @@ public class RedisClusterConfig {
     }    
     */
 	
-	
     @Value("${spring.redis.host}")
     private String host;
     //private String host = "192.168.35.201";
@@ -55,7 +54,12 @@ public class RedisClusterConfig {
     private int port2 = 6101;		
     private String host3= "192.168.35.213";
     private int port3 = 6101;		
-    
+    private String host4= "192.168.35.211";
+    private int port4 = 6201;		
+    private String host5= "192.168.35.212";
+    private int port5 = 6201;		
+    private String host6= "192.168.35.213";
+    private int port6 = 6201;		
     
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
