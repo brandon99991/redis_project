@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Hello Thymeleaf</title>
+</head>
+<body>
+	<dl>
+		<dt>id</dt>
+		<dl th:each="board : ${boards}"> 
+			<br>id<br>
+			<dt th:text="${board.id}"></dt>
+			<br>title<br>
+			<dt th:text="${board.title}"></dt>
+			<br>contents<br>
+			<dt th:text="${board.contents}"></dt>
+		</dl>
+	</dl>
+</body>
+</html>
+

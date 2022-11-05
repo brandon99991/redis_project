@@ -1,0 +1,34 @@
+spring:
+  tomcat:
+    threads:
+      max: 500
+  profiles:
+    active: local
+
+namespace: ns-edu
+---
+spring:
+  profiles: local
+
+  redis:
+    cluster:
+      nodes:
+      - 192.168.35.201:6001
+      - 192.168.35.201:6002
+      - 192.168.35.201:6003
+      - 192.168.35.201:6011
+      - 192.168.35.201:6012
+      - 192.168.35.201:6013
+
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+logging:
+  level:
+    jdbc.sqlonly: OFF
+    org.springframework.web: DEBUG
+
+server:
+  port: 18000

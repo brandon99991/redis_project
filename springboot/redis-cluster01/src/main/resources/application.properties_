@@ -1,0 +1,4 @@
+server.port=80
+
+spring.redis.host=kis.synology.me
+spring.redis.port=8002

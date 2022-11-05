@@ -1,0 +1,70 @@
+#redis集群
+server:
+  port: 9999
+
+spring:
+  #数据库连接信息
+  datasource:
+    url: jdbc:mysql://192.168.2.20:3306/producter?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    #url: jdbc:mysql://172.17.86.10:3306/producter?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: hadoop
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+        
+        # 配置初始化大小（默认0）、最小、最大（默认8） 
+    initial-size: 1 
+    min-idle: 1 
+    max-active: 20 
+        # 配置获取连接等待超时的时间 
+    max-wait: 60000 
+        # 是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大。 默认为false 
+    pool-prepared-statements: true 
+        # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。 
+    max-open-prepared-statements: 20 
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 
+    time-between-eviction-runs-millis: 60000 
+        # 配置一个连接在池中最小和最大生存的时间，单位是毫秒 
+    min-evictable-idle-time-millis: 300000 
+    max-evictable-idle-time-millis: 900000 
+        # 用来检测连接是否有效的sql，要求是一个查询语句，常用select 'x'。 
+        # 如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会起作用。 
+    validation-query: SELECT 1 
+        # 申请连接时执行validationQuery检测连接是否有效 默认为true 
+    test-on-borrow: true 
+        # 归还连接时执行validationQuery检测连接是否有效 默认为false 
+    test-on-return: false 
+        # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+    test-while-idle: true
+  application:
+    name: springboot-redis-cluster
+  #redis集群信息
+  redis:
+    password:
+    cluster:
+      nodes: 192.168.35.201:6001,192.168.35.201:6002,192.168.35.201:6003,192.168.35.201:6011,192.168.35.201:6012,192.168.35.201:6013
+      max-redirects: 3
+    lettuce:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 20
+        #连接池最大阻塞等待时间（使用负值表示没有限制） 
+        max-wait: -1
+        #连接池中的最大空闲连接
+        max-idle: 10
+        #连接池中的最小空闲连接
+        min-idle: 5
+    timeout: 1000
+
+#------------------------------------mybatis相关配置------------------------------------------------------
+mybatis:
+  mapperLocations: classpath:mapper/*Mapper.xml   #mapper文件的位置
+  typeAliasesPackage: com.cht.springboot.redis.cluster.model  # 注意：对应实体类的路径
+        
+#-----------------------------------日志--------------------------------------------------------
+logging:
+  level:
+    com.cht.springboot.redis.cluster.mapper : debug
+   
+    
+    
