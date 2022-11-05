@@ -20,18 +20,11 @@
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 
-	<!--
-	- Loads the root application context of this web app at startup.
-	- The application context is then available via
-	- WebApplicationContextUtils.getWebApplicationContext(servletContext).
-	-->
-	<!-- tag::listeners[] -->
 	<listener>
 		<listener-class>
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
-	<!-- end::listeners[] -->
 
 	<servlet>
 		<servlet-name>session</servlet-name>
