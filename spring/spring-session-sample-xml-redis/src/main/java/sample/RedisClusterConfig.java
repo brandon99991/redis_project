@@ -25,10 +25,17 @@ import java.util.List;
 @Configuration
 public class RedisClusterConfig {
 	
-    //@Value("${redis.cluster}")
-    @Value("#{'${redis.cluster}'.split(',')}")
-    private List<String> redisNodes;
+    //@Value("${spring.redis.cluster}")
+    //@Value("#{'${spring.redis.cluster}'.split(',')}")
+    //private List<String> redisNodes;
+
+    @Value("#{'${spring.redis.master}'.split(',')}")
+    private List<String> redisMasterNodes;
+	
+    @Value("#{'${spring.redis.slave}'.split(',')}")
+    private List<String> redisSlaveNodes;
     
+	
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
       LettuceClientConfiguration lettuceClientConfiguration =
@@ -39,8 +46,24 @@ public class RedisClusterConfig {
       
       RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration();
       
+      /*
       redisNodes.forEach(s -> {
           String[] url = s.split(":");
+          clusterConfiguration.clusterNode(url[0],Integer.parseInt(url[1]));
+          System.out.println(url[0] + ":" +url[1]);
+      });
+      */
+
+      System.out.println("[MasterNodes]");
+      redisMasterNodes.forEach(s1 -> {
+          String[] url = s1.split(":");
+          clusterConfiguration.clusterNode(url[0],Integer.parseInt(url[1]));
+          System.out.println(url[0] + ":" +url[1]);
+      });
+      
+      System.out.println("[SlaveNodes]");      
+      redisSlaveNodes.forEach(s2 -> {
+          String[] url = s2.split(":");
           clusterConfiguration.clusterNode(url[0],Integer.parseInt(url[1]));
           System.out.println(url[0] + ":" +url[1]);
       });
