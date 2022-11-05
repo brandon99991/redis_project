@@ -74,6 +74,10 @@ public class RedisClusterConfig {
       clusterConfiguration.clusterNode(host1, port1);
       clusterConfiguration.clusterNode(host2, port2);
       clusterConfiguration.clusterNode(host3, port3);
+      clusterConfiguration.clusterNode(host4, port4);
+      clusterConfiguration.clusterNode(host5, port5);
+      clusterConfiguration.clusterNode(host6, port6);
+      
       new LettuceConnectionFactory(clusterConfiguration);
       return new LettuceConnectionFactory(clusterConfiguration, lettuceClientConfiguration);
     }
