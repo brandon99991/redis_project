@@ -23,7 +23,6 @@ import java.time.Duration;
 @Configuration
 //@Profile("embedded-redis")
 public class RedisClusterConfig {
-
 	
 	/*
     @Autowired
@@ -40,14 +39,6 @@ public class RedisClusterConfig {
     }    
     */
 	
-    @Value("${spring.redis.host}")
-    private String host;
-    //private String host = "192.168.35.201";
-    
-    @Value("${spring.redis.port}")
-    private int port;
-    //private int port = 8002;		
-
     private String host1= "192.168.35.211";
     private int port1 = 6101;		
     private String host2= "192.168.35.212";
@@ -99,6 +90,5 @@ public class RedisClusterConfig {
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(MyData.class));
         return redisTemplate;
     } 
-    */   
-    
+    */       
 }
