@@ -1,0 +1,51 @@
+#Tomcat基础设备
+server:
+  port: 8090
+  tomcat:
+    uri-encoding: UTF-8
+  context-path: /allInOne
+
+logging:
+  level:
+    root: info
+
+#文件服务器目录
+files:
+  upload-path: /var/allinone/
+  url: http://172.23.24.219:8090/allInOne/
+#字符编码
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    multipart:
+      enabled: true
+      max-file-size: 2Mb
+      max-request-size: 10Mb
+  messages:
+    encoding: UTF-8
+  aop:
+    auto: true
+  jmx:
+    enabled: false
+  #静态文件处理
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,\
+      classpath:/public/,file:${files.upload-path}
+
+redis:
+  cluster: 
+    nodes:
+      - 192.168.35.201:6001
+      - 192.168.35.201:6002
+      - 192.168.35.201:6003
+      - 192.168.35.201:6011
+      - 192.168.35.201:6012
+      - 192.168.35.201:6013
+
+    maxRedirects: 3
+    
