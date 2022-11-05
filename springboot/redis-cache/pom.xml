@@ -7,7 +7,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.6.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository aaaaaaaaaa-->
+		<relativePath /> <!-- lookup parent from repository bbbbbbb-->
 	</parent>
 	<groupId>com.eric</groupId>
 	<artifactId>redis-cache</artifactId>
