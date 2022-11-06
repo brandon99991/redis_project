@@ -39,4 +39,20 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<!-- 
+	<session-config>
+        <session-timeout>30</session-timeout>
+	    <cookie-config>
+	        <name>JSESSIONID</name>
+	    </cookie-config>
+	</session-config>
+	 -->		
+
+<!-- Tomcat Disable Cookie (JSessionID ...) -->	 
+<session-config>
+   <session-timeout>1</session-timeout>
+   <tracking-mode>COOKIE</tracking-mode>
+</session-config>	 
+	 
 </web-app>

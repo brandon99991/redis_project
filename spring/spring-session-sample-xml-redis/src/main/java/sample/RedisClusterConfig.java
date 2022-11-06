@@ -15,6 +15,9 @@ import org.springframework.data.redis.connection.lettuce.LettucePoolingClientCon
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.session.web.http.CookieSerializer;
+import org.springframework.session.web.http.DefaultCookieSerializer;
 
 import io.lettuce.core.ClientOptions;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -23,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 2)      // Redis Session Timeout
 public class RedisClusterConfig {
-	
     //@Value("${spring.redis.cluster}")
     //@Value("#{'${spring.redis.cluster}'.split(',')}")
     //private List<String> redisNodes;
@@ -34,6 +37,17 @@ public class RedisClusterConfig {
 	
     @Value("#{'${spring.redis.slave}'.split(',')}")
     private List<String> redisSlaveNodes;
+    
+	// tag::cookie-serializer[]
+	@Bean
+	public CookieSerializer cookieSerializer() {
+		DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+		serializer.setCookieName("RSESSIONID"); // <1>
+		serializer.setCookiePath("/"); // <2>
+		serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$"); // <3>
+		return serializer;
+	}
+	// end::cookie-serializer[]    
     
 	
     @Bean
@@ -77,6 +91,7 @@ public class RedisClusterConfig {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());        
         redisTemplate.setKeySerializer(new StringRedisSerializer());
+        
         return redisTemplate;
     }    
     
