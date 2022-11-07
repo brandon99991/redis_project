@@ -36,7 +36,10 @@ public class SessionServlet extends HttpServlet {
 		
 //		System.out.println(session.getId());
 		
-		resp.sendRedirect(req.getContextPath() + "/");
+		//resp.sendRedirect(req.getContextPath() + "/");
+		String referrer = ((HttpServletRequest) req).getHeader("referer");
+		resp.sendRedirect(referrer);
+
 	}
 
 	private static final long serialVersionUID = 2878267318695777395L;

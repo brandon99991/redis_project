@@ -16,8 +16,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
+import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
+import org.springframework.session.web.http.SessionRepositoryFilter;
 
 import io.lettuce.core.ClientOptions;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -26,11 +29,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 2)      // Redis Session Timeout
-public class RedisClusterConfig {
-    //@Value("${spring.redis.cluster}")
-    //@Value("#{'${spring.redis.cluster}'.split(',')}")
-    //private List<String> redisNodes;
+@EnableRedisHttpSession
+//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 100)      // Redis Session Timeout (seconds)
+//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 6000, redisNamespace = "ueboot_shiro")
+public class RedisClusterConfig extends AbstractHttpSessionApplicationInitializer {
+	
+    //@Autowired(required = false)
+	//@Autowired
+	//RedisHttpSessionConfiguration redisHttpSessionConfiguration;
+	//public void setmaxInactiveIntervalInSeconds(@Autowired RedisHttpSessionConfiguration config){
+	//	config.setMaxInactiveIntervalInSeconds(100);
+	//}
+	
+    //SessionRepositoryFilter sessionRepositoryFilter = new SessionRepositoryFilter(??????) 
+    //RedisHttpSessionConfiguration redisHttpSessionConfiguration = new RedisHttpSessionConfiguration();
+	
+	//public RedisClusterConfig(){
+    //	super(RedisHttpSessionConfiguration.class);
+    //	RedisHttpSessionConfiguration.setMaxInactiveIntervalInSeconds(3000);
+    //}
+	
+	public RedisClusterConfig(){
+		
+    }
+	
+	
 
     @Value("#{'${spring.redis.master}'.split(',')}")
     private List<String> redisMasterNodes;
@@ -59,14 +82,6 @@ public class RedisClusterConfig {
               .build();
       
       RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration();
-      
-      /*
-      redisNodes.forEach(s -> {
-          String[] url = s.split(":");
-          clusterConfiguration.clusterNode(url[0],Integer.parseInt(url[1]));
-          System.out.println(url[0] + ":" +url[1]);
-      });
-      */
 
       System.out.println("[MasterNodes]");
       redisMasterNodes.forEach(s1 -> {
@@ -105,4 +120,5 @@ public class RedisClusterConfig {
         return redisTemplate;
     } 
     */       
+        
 }

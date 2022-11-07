@@ -73,12 +73,12 @@
 	date.setTime(session.getCreationTime());
 
 	
-//    out.println("<b>세션 생성된 시간</b>: " + session.getCreationTime() + "<br>");
+    out.println("<b>세션 생성된 시간</b>: " + session.getCreationTime() + "<br>");
     out.println("<b>세션 생성된 시간 </b>: " + sdf.format(date) + "<br>");
     
     date.setTime(session.getLastAccessedTime());
     
-//    out.println("<b>세션 최근 접근 시간 </b>: " + session.getLastAccessedTime() + "<br>");
+    out.println("<b>세션 최근 접근 시간 </b>: " + session.getLastAccessedTime() + "<br>");
     out.println("<b>세션 최근 접근 시간 </b>: " + sdf.format(date) + "<br>");
 
     out.println("<b>session.getMaxInactiveInterval</b> : " + s_interval + "<br>");
