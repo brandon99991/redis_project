@@ -6,6 +6,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/session.xml
+<!--  			/WEB-INF/spring/dispatcher-servlet.xml     -->
 		</param-value>
 	</context-param>
 
@@ -51,7 +52,7 @@
 
 <!-- Tomcat Disable Cookie (JSessionID ...) -->	 
 <session-config>
-   <session-timeout>1</session-timeout>
+   <session-timeout>10</session-timeout>
    <tracking-mode>COOKIE</tracking-mode>
 </session-config>	 
 	 

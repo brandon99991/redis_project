@@ -32,6 +32,9 @@
         </form>
 
         <hr/>
+        <form id="logout" class="form-inline" role="form" action="./logout.jsp" method="post">
+            <input type="submit" value="Session Invalidate"/>
+        </form>
 
         <table class="table table-striped">
             <thead>
@@ -75,26 +78,29 @@
 	
     out.println("<b>세션 생성된 시간</b>: " + session.getCreationTime() + "<br>");
     out.println("<b>세션 생성된 시간 </b>: " + sdf.format(date) + "<br>");
-    
     date.setTime(session.getLastAccessedTime());
-    
     out.println("<b>세션 최근 접근 시간 </b>: " + session.getLastAccessedTime() + "<br>");
     out.println("<b>세션 최근 접근 시간 </b>: " + sdf.format(date) + "<br>");
-
     out.println("<b>session.getMaxInactiveInterval</b> : " + s_interval + "<br>");
 
-%>
+///////////////////////////
+//get Cookies
+///////////////////////////
+out.println("<h1>* Get Cookies (name : value) </h1>");
 
+Cookie cookies[] = request.getCookies();
+for (int i=0; i < cookies.length; i++) {
+String name = cookies[i].getName();
+String value = cookies[i].getValue();
 
-
-
-
-<%
-/*
+out.println("<b>" + name + "</b> : " + value + "<br>");
+}
+    
+    
+/* 
 ///////////////////////////
 // session Attribute
 ///////////////////////////
-
     String sessionName;
     String sessionValue;
     Enumeration enumeration = session.getAttributeNames();
@@ -105,32 +111,11 @@
         out.println("<b>sessionName</b> : " + sessionName + "<br>");
         out.println("<b>sessionValue</b> : " + sessionValue + "<br>");
     }
-*/    
-%>
-
-<br>
-
-<%
-///////////////////////////
-// get Cookies
-///////////////////////////
-
- out.println("<h1>* Get Cookies (name : value) </h1>");
-
- Cookie cookies[] = request.getCookies();
- for (int i=0; i < cookies.length; i++) {
-  String name = cookies[i].getName();
-  String value = cookies[i].getValue();
-
-  out.println("<b>" + name + "</b> : " + value + "<br>");
- }
-%>
-<br> 
-<%
+    
+ 
 ///////////////////////////
 // HostName, IP, Port ...
 ///////////////////////////
-
  out.println("<h1>* Get HostName, IP, Port ... </h1>");
 
        String svrName=request.getLocalName();
@@ -168,9 +153,7 @@
         //String FromUrl=request.isRequestedSessionIdFromURL();
         //String sesValid=request.isRequestedSessionIdValid();  
         //out.println(" sesId : " + sesId + "<br>");      
-%>
-<br>
-<%
+
 ///////////////////////////
 // get Header
 ///////////////////////////
@@ -184,12 +167,7 @@
 
  out.println(hName + " : " + hValue + "<br>");
  }
-%>
 
- <br>
-
-<%
-/*
 ///////////////////////////
 // Get Attribute
 ///////////////////////////
@@ -203,16 +181,10 @@
 
   out.println(aName + " : " + aValue + "<br>");
  }
-*/ 
-%>
- <br>
-<%
-/*
+
 ///////////////////////////
 // Get Parameter
 ///////////////////////////
-
-
  Enumeration eParam = request.getParameterNames();
  while (eParam.hasMoreElements()) {
   String pName = (String)eParam.nextElement();
@@ -220,6 +192,8 @@
 
   out.println(pName + " : " + pValue + "<br>");
  }
+ 
+ 
  */
 %>
     <br>

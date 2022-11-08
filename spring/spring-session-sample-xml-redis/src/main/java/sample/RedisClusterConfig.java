@@ -20,6 +20,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.RedisHt
 import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
+import org.springframework.session.web.http.SessionEventHttpSessionListenerAdapter;
 import org.springframework.session.web.http.SessionRepositoryFilter;
 
 import io.lettuce.core.ClientOptions;
@@ -28,33 +29,22 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-@EnableRedisHttpSession
-//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 100)      // Redis Session Timeout (seconds)
-//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 6000, redisNamespace = "ueboot_shiro")
-public class RedisClusterConfig extends AbstractHttpSessionApplicationInitializer {
-	
-    //@Autowired(required = false)
-	//@Autowired
-	//RedisHttpSessionConfiguration redisHttpSessionConfiguration;
-	//public void setmaxInactiveIntervalInSeconds(@Autowired RedisHttpSessionConfiguration config){
-	//	config.setMaxInactiveIntervalInSeconds(100);
-	//}
-	
-    //SessionRepositoryFilter sessionRepositoryFilter = new SessionRepositoryFilter(??????) 
-    //RedisHttpSessionConfiguration redisHttpSessionConfiguration = new RedisHttpSessionConfiguration();
-	
-	//public RedisClusterConfig(){
-    //	super(RedisHttpSessionConfiguration.class);
-    //	RedisHttpSessionConfiguration.setMaxInactiveIntervalInSeconds(3000);
-    //}
-	
-	public RedisClusterConfig(){
-		
-    }
-	
-	
+import javax.servlet.http.HttpSessionListener;
 
+@Configuration
+//@EnableRedisHttpSession
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 180)      // Redis Session Timeout (seconds)
+//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 6000, redisNamespace = "ueboot_shiro")
+public class RedisClusterConfig {
+	
+	@Bean
+	public SessionEventHttpSessionListenerAdapter session() {
+	        List<HttpSessionListener> listeners = new ArrayList<HttpSessionListener>();
+	        listeners.add(new SessionListener());
+	        return new SessionEventHttpSessionListenerAdapter(listeners);
+	}	
+	
+	
     @Value("#{'${spring.redis.master}'.split(',')}")
     private List<String> redisMasterNodes;
 	
@@ -120,5 +110,4 @@ public class RedisClusterConfig extends AbstractHttpSessionApplicationInitialize
         return redisTemplate;
     } 
     */       
-        
 }

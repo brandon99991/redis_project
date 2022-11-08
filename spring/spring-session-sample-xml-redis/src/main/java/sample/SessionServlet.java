@@ -32,8 +32,6 @@ public class SessionServlet extends HttpServlet {
 		String attributeValue = req.getParameter("attributeValue");
 		req.getSession().setAttribute(attributeName, attributeValue);
 		
-		
-		
 //		System.out.println(session.getId());
 		
 		//resp.sendRedirect(req.getContextPath() + "/");
