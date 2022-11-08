@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config/>
+    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
+
+    <!--   bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="maxInactiveIntervalInSeconds" value="100" />
+    </bean  -->
+
+
+    <!--  RedisHttpSessionConfiguration bean을 생성하는 이유는, 
+    스프링에서 기존에 사용하는 HttpSession을 대신해서 사용할 SpringSessionRepositoryFilter를 
+    bean객체로 생성하기 위함인데 RedisHttpSessionConfiguration클래스에 내부적으로 
+    SpringSessionRepositoryFilter의 빈을 생성한다고 주석된걸 볼 수 있었다. -->
+	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/> 
+	<bean class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory"/>
+	
+	<!--   bean class="sample.RedisConfig"/   -->
+	<bean class="sample.RedisClusterConfig"/>
+
+
+</beans>
