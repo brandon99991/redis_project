@@ -147,7 +147,7 @@
 	               	<version>2.4</version>
 	               	<configuration>
 	               		<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<warName>redisc01</warName>
+						<warName>rediscluster01</warName>
 	               		<failOnMissingWebXml>false</failOnMissingWebXml>
 	               	</configuration>
 	               </plugin>
