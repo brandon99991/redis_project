@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 8aa466f3e2c6af145de0479704436daa28ebd924290e9212119c75a7e2512cc7
+    cni.projectcalico.org/podIP: 172.16.235.173/32
+    cni.projectcalico.org/podIPs: 172.16.235.173/32
+  creationTimestamp: "2022-11-06T04:53:22Z"
+  labels:
+    run: redistest01
+  name: redistest01
+  namespace: default
+  resourceVersion: "913708"
+  uid: 15359451-5361-4e98-a1c5-4e5622653731
+spec:
+  containers:
+  - image: brandon9999/tomcat9jdk8
+    imagePullPolicy: Always
+    name: redistest01
+    ports:
+      - name: web
+        containerPort: 8080
+        protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-j9w7r
+      readOnly: true
+    - mountPath: /usr/local/tomcat/webapps
+      name: nfs-volume01
+    - mountPath: /usr/local/tomcat/conf
+      name: nfs-volume02
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: worker1
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-j9w7r
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+  - name: nfs-volume01
+    nfs:
+      server: 192.168.35.210
+      path: /home/nfs/tomcat9/webapps
+  - name: nfs-volume02
+    nfs:
+      server: 192.168.35.210
+      path: /home/nfs/tomcat9/conf
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-06T04:53:22Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-06T04:53:26Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-06T04:53:26Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-06T04:53:22Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://39c122a103f9a3a639521eaf830c1594c3033b66c652b7826ec2d5a77339019a
+    image: brandon9999/tomcat9jdk8:latest
+    imageID: docker-pullable://brandon9999/tomcat9jdk8@sha256:18ce773b2bbd4c4d2c3c0444523024d3ed4554078e7a9ef7cc311f1c81a835bd
+    lastState: {}
+    name: redistest01
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-11-06T04:53:25Z"
+  hostIP: 192.168.35.211
+  phase: Running
+  podIP: 172.16.235.173
+  podIPs:
+  - ip: 172.16.235.173
+  qosClass: BestEffort
+  startTime: "2022-11-06T04:53:22Z"

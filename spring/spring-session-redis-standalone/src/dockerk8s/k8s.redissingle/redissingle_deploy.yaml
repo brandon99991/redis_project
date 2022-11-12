@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: tomcat9-redis-single
+  name: tomcat9-redis-single
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: tomcat9-redis-single
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: tomcat9-redis-single
+    spec:
+      containers:
+      - image: brandon9999/tomcat9jdk8
+        name: tomcat9-redis-single
+        volumeMounts:
+        - mountPath: /usr/local/tomcat/webapps
+          name: nfs-volume01
+        - mountPath: /usr/local/tomcat/conf
+          name: nfs-volume02
+        - mountPath: /usr/local/tomcat/bin
+          name: nfs-volume03
+        ports:
+        - containerPort: 8080
+        resources: {}
+      volumes:
+      - name: nfs-volume01
+        nfs:
+          server: 192.168.35.210
+          path: /home/nfs/tomcat9_redissingle/webapps
+      - name: nfs-volume02
+        nfs:
+          server: 192.168.35.210
+          path: /home/nfs/tomcat9_redissingle/conf        
+      - name: nfs-volume03
+        nfs:
+          server: 192.168.35.210
+          path: /home/nfs/tomcat9_redissingle/bin        
+status: {}
